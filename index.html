@@ -267,9 +267,38 @@
             height: 120px;
             width: 100%;
             display: flex;
-            justify(content): center;
+            justify-content: center;
             align-items: center;
             z-index: 100;
+        }
+
+        .love-notes {
+            color: #d63384;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            font-style: italic;
+            height: 30px;
+            z-index: 10;
+        }
+
+        .floating-cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.6;
+            filter: blur(5px);
+            z-index: 0;
+            animation: cloudMove linear infinite;
+        }
+
+        @keyframes cloudMove {
+            from { transform: translateX(-200px); }
+            to { transform: translateX(110vw); }
+        }
+
+        .teddy-container:hover .blush {
+            transform: scale(1.5);
+            background: rgba(255, 100, 150, 0.8);
         }
 
         .buttons {
@@ -399,6 +428,9 @@
         </div>
 
         <h1>Will you be my Valentine? 💖</h1>
+        <p style="font-size: 1.2rem; margin-top: -10px; opacity: 0.9;">You're the sweetest person I know! ✨</p>
+
+        <div class="love-notes" id="loveNotes"></div>
 
         <div class="buttons-wrapper">
             <div class="buttons" style="width: 300px;">
@@ -453,6 +485,40 @@
             sparkle.style.animationDelay = Math.random() * 2 + 's';
             document.body.appendChild(sparkle);
         }
+
+        // Create Clouds
+        for (let i = 0; i < 5; i++) {
+            const cloud = document.createElement('div');
+            cloud.className = 'floating-cloud';
+            cloud.style.width = Math.random() * 150 + 100 + 'px';
+            cloud.style.height = Math.random() * 40 + 30 + 'px';
+            cloud.style.top = Math.random() * 60 + 'vh';
+            cloud.style.left = '-200px';
+            cloud.style.animationDuration = Math.random() * 20 + 20 + 's';
+            cloud.style.animationDelay = Math.random() * 20 + 's';
+            document.body.appendChild(cloud);
+        }
+
+        // Love Notes
+        const notes = [
+            "Every moment with you is like a dream come true... 🧸",
+            "My heart skips a beat when I see your name! 💓",
+            "You make my world so much brighter! ✨",
+            "I'm so lucky to have you in my life! 🍀",
+            "You're the rasmalai to my heart! 🍬"
+        ];
+        let noteIndex = 0;
+        const loveNotesEl = document.getElementById('loveNotes');
+        function rotateNotes() {
+            loveNotesEl.style.opacity = 0;
+            setTimeout(() => {
+                loveNotesEl.innerText = notes[noteIndex];
+                loveNotesEl.style.opacity = 1;
+                noteIndex = (noteIndex + 1) % notes.length;
+            }, 500);
+        }
+        setInterval(rotateNotes, 3000);
+        rotateNotes();
 
         // Create Floating Hearts
         function createHeart() {
